@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  This template creates a development environment with Docker, Docker-Compose,
+  Java 11, Git installed and project repository cloned from GitHub. 
+Parameters:
+  KeyPairName:
+    Description: Please select an existing KeyPair 
+    Type: AWS::EC2::KeyPair::KeyName
+Resources:
+  DevServerSG:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: Development Server SG #required
+      SecurityGroupIngress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+  DevServer:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: ami-0947d2ba12ee1ff75
+      InstanceType: 't2.micro'
+      KeyName: !Ref KeyPairName
+      SecurityGroups:
+        - !Ref DevServerSG
+      Tags:
+        - Key: Name
+          Value: DevServer
+      UserData: !Base64 |
+        #!/bin/bash
+        yum update -y
+        hostnamectl --set-hostname petclinic-dev-server
+        sudo amazon-linux-extras install docker -y
+        systemctl start docker
+        systemctl enable docker
+        usermod -a G docker ec2-user
+        curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        yum install java -y
+        yum install -y git
+        cd /home/ec2-user/
+        git clone https://github.com/talha-01/microservices-ci-cd-pipeline-with-petclinic-app.git
+        chown -R ec2-user:ec2-user microservices-ci-cd-pipeline-with-petclinic-app/
