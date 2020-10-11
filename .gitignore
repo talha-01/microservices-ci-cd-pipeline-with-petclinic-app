@@ -16,3 +16,6 @@ target/
 
 # Branch switching
 generated/
+spring-petclinic-customers-service/.factorypath
+spring-petclinic-vets-service/.factorypath
+spring-petclinic-visits-service/.factorypath
