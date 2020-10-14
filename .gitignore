@@ -1,7 +1,8 @@
 # Maven
 target/
 !.mvn/wrapper/maven-wrapper.jar
-
+unit-test-with-python.py
+unit-test-with-python-unittest.py
 # Jenv
 .java-version
 
