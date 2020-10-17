@@ -17,11 +17,11 @@ public class PetTest {
         //Arrange
         Pet pet = new Pet();
         Owner owner = new Owner();
-        owner.setFirstName("Call");
+        owner.setFirstName("Talha");
         //Act
         pet.setOwner(owner);
         //Assert
-        assertEquals("Call", pet.getOwner().getFirstName());
+        assertEquals("TalhaS", pet.getOwner().getFirstName());
     }
     @Test
     public void testBirthDate(){
