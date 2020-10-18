@@ -4,6 +4,18 @@ regions:
 filters: 
   tag:app-stack-name: APP_STACK_NAME
   tag:environment: dev
+keyed_groups:
+  - key: tags['app-stack-name']
+    prefix: 'app_stack_'
+    seperator: ''
+  - key: tags['swarm-role']
+    prefix: 'role_'
+    seperator: ''
+  - key: tags['environment']
+    prefix: 'env_'
+    seperator: ''
+  - key: tags['server']
+    seperator: ''
 hostnames:
   - "private-ip-address"
 compose: 
