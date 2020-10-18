@@ -7,9 +7,9 @@
   - debug: msg='{{ join_command_for_workers.stdout.strip() }}'
   - name: register grand_master with variable
     add_host:
-      name: "grand__master"
+      name: "grand_master"
       worker_join: "{{ join_command_for_workers.stdout.strip() }}"
-- hosts: role_worker
+- hosts: role__worker
   tasks:
   - name: Join workers to swarm
     shell: "{{ hostvars['grand_master']['worker_join'] }}"
