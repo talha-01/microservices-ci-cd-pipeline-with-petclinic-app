@@ -3,7 +3,7 @@ regions:
   - "us-east-1"
 filters: 
   tag:app-stack-name: APP_STACK_NAME
-  tag:environmetn: dev
+  tag:environment: dev
 hostnames:
   - "private-ip-address"
 compose: 
