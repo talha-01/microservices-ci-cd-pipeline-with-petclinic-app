@@ -9,7 +9,7 @@
     add_host:
       name: "grand_master"
       manager_join: "{{ join_command_for_managers.stdout.strip() }}"
-- hosts: role_manager
+- hosts: role__manager
   tasks:
   - name: Join managers to swarm
     shell: "{{ hostvars['grand_master']['manager_join'] }}"
