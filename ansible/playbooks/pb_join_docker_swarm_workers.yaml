@@ -7,7 +7,7 @@
   - debug: msg='{{ join_command_for_workers.stdout.strip() }}'
   - name: register grand_master with variable
     add_host:
-      name: "grand_master"
+      name: "grand__master"
       worker_join: "{{ join_command_for_workers.stdout.strip() }}"
 - hosts: role_worker
   tasks:
