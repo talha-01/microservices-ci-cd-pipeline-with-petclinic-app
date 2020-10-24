@@ -9,7 +9,7 @@ keyed_groups:
     prefix: 'app_stack_'
     separator: ''
   - key: tags['swarm-role']
-    prefix: 'role_'
+    prefix: 'role__'
     separator: ''
   - key: tags['environment']
     prefix: 'env_'
