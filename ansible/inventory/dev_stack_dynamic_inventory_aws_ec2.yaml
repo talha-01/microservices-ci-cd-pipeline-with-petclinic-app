@@ -7,15 +7,15 @@ filters:
 keyed_groups:
   - key: tags['app-stack-name']
     prefix: 'app_stack_'
-    seperator: ''
+    separator: ''
   - key: tags['swarm-role']
     prefix: 'role_'
-    seperator: ''
+    separator: ''
   - key: tags['environment']
     prefix: 'env_'
-    seperator: ''
+    separator: ''
   - key: tags['server']
-    seperator: ''
+    separator: ''
 hostnames:
   - "private-ip-address"
 compose: 
