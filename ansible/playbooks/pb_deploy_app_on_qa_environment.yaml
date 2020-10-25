@@ -1,5 +1,5 @@
 ---
-- hosts: role__grand_master
+- hosts: role_grand_master
   tasks:
   - name: Copy docker compose file to grand master
     copy:
