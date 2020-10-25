@@ -6,13 +6,13 @@ filters:
   tag:environment: qa
 keyed_groups:
   - key: tags['app-stack-name']
-    prefix: 'app_stack__'
+    prefix: 'app_stack_'
     separator: ''
   - key: tags['swarm-role']
-    prefix: 'role__'
+    prefix: 'role_'
     separator: ''
   - key: tags['environment']
-    prefix: 'env__'
+    prefix: 'env_'
     separator: ''
   - key: tags['server']
     separator: ''
