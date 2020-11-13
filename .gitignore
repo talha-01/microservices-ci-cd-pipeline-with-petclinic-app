@@ -21,3 +21,8 @@ spring-petclinic-customers-service/.factorypath
 spring-petclinic-vets-service/.factorypath
 spring-petclinic-visits-service/.factorypath
 .factorypath
+
+#move_jenkins
+move_jenkins/terraform.tfstate
+move_jenkins/terraform.tfstate.backup
+move_jenkins/.terraform/
