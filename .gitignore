@@ -20,9 +20,13 @@ generated/
 spring-petclinic-customers-service/.factorypath
 spring-petclinic-vets-service/.factorypath
 spring-petclinic-visits-service/.factorypath
+<<<<<<< HEAD
 .factorypath
 
 #move_jenkins
 move_jenkins/terraform.tfstate
 move_jenkins/terraform.tfstate.backup
 move_jenkins/.terraform/
+=======
+.factorypath
+>>>>>>> c2b2f260e5fc5ef2ea6df3072e0d2834ae3db202
