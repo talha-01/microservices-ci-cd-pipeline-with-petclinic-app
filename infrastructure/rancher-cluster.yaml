@@ -1,0 +1,17 @@
+nodes:
+  - address: 18.207.250.192
+    internal_address: 172.31.64.87
+    user: ubuntu
+    role: [controlplane, worker, etcd]
+services:
+  etcd:
+    snapshot: true
+    creation: 6h
+    retention: 24h
+ssh_key_path: ~/.ssh/talha-rancher.key
+# Required for external TLS termination with
+# ingress-nginx v0.22+
+ingress:
+  provider: nginx
+  options:
+    use-forwarded-headers: "true"
