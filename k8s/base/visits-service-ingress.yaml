@@ -13,7 +13,7 @@ metadata:
   name: visits-service
 spec:
   rules:
-  - host: petclinic.clarusway.us
+  - host: petclinic.talhasahin.me
     http:
       paths:
       - backend:
