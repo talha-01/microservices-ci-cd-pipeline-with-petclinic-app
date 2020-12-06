@@ -3,10 +3,3 @@ bases:
 - ../base
 patches:
 - replica-count.yml
-- target: 
-    kind: Ingress
-  patch: |-
-  - op: add
-    path: /spec/rules
-    value: 
-    - host: petclinic-staging.talhasahin.me 
