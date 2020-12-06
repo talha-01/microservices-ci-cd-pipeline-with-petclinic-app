@@ -4,4 +4,43 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 3 
+  replicas: 3
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: api-gateway
+spec:
+  rules:
+  - host: petclinic-staging.talhasahin.me  
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: customers-service
+spec:
+  rules:
+  - host: petclinic-staging.talhasahin.me
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: vets-service
+spec:
+  rules:
+  - host: petclinic-staging.talhasahin.me  
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata: 
+  name: visits-service
+spec:
+  rules:
+  - host: petclinic-staging.talhasahin.me  
