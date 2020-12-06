@@ -1,6 +1,12 @@
-# kustomization.yml
 namespace: "petclinic-staging-ns"
 bases:
 - ../base
 patches:
 - replica-count.yml
+- target: 
+    kind: Ingress
+  patch: |-
+  - op: add
+    spec:
+      rules:
+      - host: petclinic-staging.talhasahin.me 
