@@ -7,6 +7,6 @@ patches:
     kind: Ingress
   patch: |-
   - op: add
-    spec:
-      rules:
-      - host: petclinic-staging.talhasahin.me 
+    path: /spec/rules
+    value: 
+    - host: petclinic-staging.talhasahin.me 
