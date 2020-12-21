@@ -149,7 +149,9 @@ pipeline {
         stage('Run QA Automation Tests'){
             steps {
                 echo "Run the Selenium Functional Test on QA Environment"
-                sh 'ansible-playbook -vvv --extra-vars "workspace=${WORKSPACE} master_public_ip=${GRAND_MASTER_PUBLIC_IP}" ./ansible/playbooks/pb_run_selenium_jobs.yaml'
+                sh 'docker run --rm --env MASTER_PUBLIC_IP=${MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python test_owners_all_headless.py'
+                echo "TEST 2"
+                sh 'docker run --rm --env MASTER_PUBLIC_IP=${MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python test_owners_register_headless.py'
             }
         }
     }
