@@ -149,9 +149,9 @@ pipeline {
         stage('Run QA Automation Tests'){
             steps {
                 echo "Run the Selenium Functional Test on QA Environment"
-                sh 'docker run --rm --env MASTER_PUBLIC_IP=${MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python ${WORKSPACE}/selenium-jobs/test_owners_all_headless.py'
+                sh 'docker run --rm --env MASTER_PUBLIC_IP=${GRAND_MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python ${WORKSPACE}/selenium-jobs/test_owners_all_headless.py'
                 echo "TEST 2"
-                sh 'docker run --rm --env MASTER_PUBLIC_IP=${MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python ${WORKSPACE}/selenium-jobs/test_owners_register_headless.py'
+                sh 'docker run --rm --env MASTER_PUBLIC_IP=${GRAND_MASTER_PUBLIC_IP} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE} callahanclarus/selenium-py-chrome:latest python ${WORKSPACE}/selenium-jobs/test_owners_register_headless.py'
             }
         }
     }
