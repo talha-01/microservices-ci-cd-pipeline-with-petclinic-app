@@ -1,0 +1,112 @@
+# ---
+# - hosts: "{{ current_jenkins_server }}"
+#   become: yes
+#   remote_user: ec2-user
+#   tasks:
+#   - name: stop jenkins 
+#     service: 
+#       name: jenkins 
+#       state: stopped 
+#   - name: archive jenkins home folder
+#     archive: 
+#       path: /var/lib/jenkins
+#       dest: /home/ec2-user/jenkins_home.tar.gz
+#       format: gz
+
+# --- 
+# - hosts: localhost
+#   tasks:
+#   - name: download the tar file on your local
+#     shell: scp -i ~/.aws/keys/talha-virginia ec2-user@"{{ current_jenkins_server_ip }}":~/jenkins_home.tar.gz /home/talha/jenkins_archive/
+
+--- 
+- hosts: '{{ new_jenkins_server }}'
+  become: yes
+  remote_user: ec2-user
+  tasks:
+  - name: install dependencies on jenkins server 
+    yum: 
+      name: "{{ package }}"
+      state: present 
+    vars: 
+      package: 
+      - git 
+      - java-11-amazon-corretto
+      - python3
+      - amazon-ecr-credential-helper 
+  - name: upload the tar file to the new jenkins server
+    copy:
+      src: /home/talha/jenkins_archive/jenkins_home.tar.gz
+      dest: /home/ec2-user/
+  - name: untar the file 
+    unarchive: 
+      remote_src: yes
+      src: /home/ec2-user/jenkins_home.tar.gz
+      dest: /home/ec2-user/
+  - name: download jenkins repo 
+    get_url: 
+      url: https://pkg.jenkins.io/redhat/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+  - name: install jenkins
+    shell: rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key && yum install jenkins -y
+  - name: install docker
+    shell: amazon-linux-extras install docker -y
+  - name: delete default jenkins home folder
+    shell: rm -rf /var/lib/jenkins
+  - name: move jankins_home folder
+    shell: mv /home/ec2-user/var/lib/jenkins /var/lib/
+  - name: start jenkins and docker services 
+    service: 
+      name: "{{ item }}"
+      state: started
+      enabled: yes
+    loop:
+      - jenkins 
+      - docker 
+  - name: add jenkins to docker group 
+    user: 
+      name: jenkins 
+      group: docker
+  - name: back up docker daemon
+    copy:
+      remote_src: yes
+      src: /lib/systemd/system/docker.service
+      dest: /lib/systemd/system/docker.service.bak
+  - name: configure docker as cloud agent for jenkins
+    lineinfile: 
+      path: /lib/systemd/system/docker.service
+      regexp: '^ExecStart=.*'
+      line: 'ExecStart=/usr/bin/dockerd -H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock'
+  - name: reload dameon and restart jenkins and docker
+    systemd: 
+      name: "{{ item }}"
+      daemon_reload: yes
+      state: restarted
+    loop:
+      - docker 
+      - jenkins
+  - name: download docker compose binary
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+  - name: uninstall awscli v1
+    shell: rm -rf /bin/aws
+  - name: install awsvli v2
+    get_url:
+      url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+      dest: /home/ec2-user/awscliv2.zip
+  - name: extract and install awscliv2
+    shell: unzip /home/ec2-user/awscliv2.zip && bash /home/ec2-user/aws/install
+  - name: configure jenkins home folder
+    file: 
+      path: /home/jenkins/.docker
+      state: directory 
+      owner: jenkins
+      group: jenkins
+      mode: 0644
+  - name: create configuration file 
+    lineinfile: 
+      path: /home/jenkins/.docker/config.json
+      create: yes
+      state: present
+      line: '{"credsStore": "ecr-login"}'
+  - name: install ansible and boto3
+    shell: pip3 install ansible && pip3 install boto3
