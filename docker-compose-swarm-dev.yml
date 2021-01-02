@@ -66,9 +66,9 @@ services:
   api-gateway:
     image: "${IMAGE_TAG_API_GATEWAY}"
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
-          parallelism: 2
+          parallelism: 1
           delay: 5s
           order: start-first
     depends_on:
