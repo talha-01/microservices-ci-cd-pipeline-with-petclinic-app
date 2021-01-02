@@ -18,9 +18,9 @@ services:
   customers-service:
     image: "${IMAGE_TAG_CUSTOMERS_SERVICE}"
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
-          parallelism: 2
+          parallelism: 1
           delay: 5s
           order: start-first
     depends_on:
@@ -34,9 +34,9 @@ services:
   visits-service:
     image: "${IMAGE_TAG_VISITS_SERVICE}"
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
-          parallelism: 2
+          parallelism: 1
           delay: 5s
           order: start-first
     depends_on:
@@ -50,9 +50,9 @@ services:
   vets-service:
     image: "${IMAGE_TAG_VETS_SERVICE}"
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
-          parallelism: 2
+          parallelism: 1
           delay: 5s
           order: start-first
     depends_on:
